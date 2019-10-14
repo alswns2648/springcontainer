@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+		
+	<!-- 명시적 설정 -->
+	<!-- 동타입의 bean을 1개이상 생성할때는 id를 설정하여 구분 -->
+	<bean id="user1" class="kr.co.itcen.springcontainer.user.User" />
+	<bean id="user2" name="usr2" class="kr.co.itcen.springcontainer.user.User" />
+	
+	<!-- 파라미터 2개로 생성 -->
+	<bean id="user3" class="kr.co.itcen.springcontainer.user.User" >
+		<constructor-arg index="0" value="3"/>
+		<constructor-arg index="1" value="김민준3" /> <!-- 파라미터 순서를 위해 index값을 넣어주면 좋다 -->
+	</bean>	
+	
+	<bean id="user4" class="kr.co.itcen.springcontainer.user.User" >
+		<property name="no" value="4"/>
+		<property name="name" value="김민준4"/>
+	</bean>	
+	
+	<bean id="user5" class="kr.co.itcen.springcontainer.user.User" >
+		<property name="no" value="5"/>
+		<property name="name" value="김민준5"/>
+		<!-- DI(Defendency Injection) -->
+		<property name="friend" ref="friend1"/>
+	</bean>	
+	
+	<bean id="friend1" class="kr.co.itcen.springcontainer.user.Friend" >
+		<constructor-arg value="친구1"/>
+	</bean>	
+	
+	<bean id="user6" class="kr.co.itcen.springcontainer.user.User" >
+		<property name="no" value="6"/>
+		<property name="name" value="김민준6"/>
+		<property name="friend" >
+			<bean class="kr.co.itcen.springcontainer.user.Friend">
+				<constructor-arg value="친구2"/>
+			</bean>
+		</property>
+		
+		<!-- collection 세팅 -->
+		<property name="friends">
+			<list>
+				<value>김민준3</value>
+				<value>김민준4</value>
+				<value>김민준5</value>
+				<value>김민준6</value>
+			</list>
+		</property>
+	</bean>	
+	
+	
+</beans>
